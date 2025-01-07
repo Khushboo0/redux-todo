@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeTodo,editTodo } from "./features/todo/todoSlice";
+import { removeTodo, editTodo } from "./features/todo/todoSlice";
 
 export default function Todos() {
   const todos = useSelector((state) => state.todos);
@@ -8,23 +8,24 @@ export default function Todos() {
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState("");
 
-  const handleSave=()=>{
+  const handleSave = () => {
     if (editText.trim()) {
-        dispatch(editTodo({ id: editId, text: editText.trim() }));
-        setEditId(null);
-        setEditText("");
-      }
-  }
-  const handleEditClick=(id,text)=>{
+        console.log(editText);
+      dispatch(editTodo({ id: editId, text: editText.trim() }));
+      setEditId(null);
+      setEditText("");
+    }
+  };
+
+  const handleEditClick = (id, text) => {
     setEditId(id);
     setEditText(text);
+  };
 
-  }
-
-  const handleCancel =()=>{
+  const handleCancel = () => {
     setEditId(null);
-    setEditText('');
-  }
+    setEditText("");
+  };
 
   return (
     <div className="container mt-4">
@@ -37,26 +38,43 @@ export default function Todos() {
               className="list-group-item d-flex justify-content-between align-items-center"
             >
               {editId === todo.id ? (
-                <div className="d-flex w-100">
-                  <input onChange={(e)=> setEditText(e.target.value)}></input>
-                  <button onClick={handleSave}>Save</button>
-                  <button onClick={handleCancel}>Cancel</button>
+                <div className="d-flex w-100 align-items-center">
+                  <input
+                    type="text"
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                    className="form-control me-2"
+                  />
+                  <button
+                    onClick={handleSave}
+                    className="btn btn-success btn-sm me-2"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={handleCancel}
+                    className="btn btn-secondary btn-sm"
+                  >
+                    Cancel
+                  </button>
                 </div>
               ) : (
                 <>
                   <span>{todo.text}</span>
-                  <button
-                    onClick={()=> handleEditClick(todo.id,todo.text)}
-                    className="btn btn-secondary btn-sm"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => dispatch(removeTodo(todo.id))}
-                    className="btn btn-danger btn-sm"
-                  >
-                    Remove
-                  </button>
+                  <div>
+                    <button
+                      onClick={() => handleEditClick(todo.id, todo.text)}
+                      className="btn btn-secondary btn-sm me-2"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => dispatch(removeTodo(todo.id))}
+                      className="btn btn-danger btn-sm"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </>
               )}
             </li>

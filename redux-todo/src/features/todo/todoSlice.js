@@ -23,13 +23,14 @@ export const todoSlice = createSlice({
             ))
 
         },
-        editTodo:(state,action)=>{
-            const{id,newText} = action.payload;
-            const todo = state.todos.find(todos=> todos.id===id)
-            if(todo){
-                todo.text=newText;
+        editTodo: (state, action) => {
+            const { id, text } = action.payload;
+            const todoIndex = state.todos.findIndex((todoItems) => todoItems.id === id);
+          
+            if (todoIndex !== -1) {
+              state.todos[todoIndex].text = text; // Update the text
             }
-        }
+          },
     }
 });
 
