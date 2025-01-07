@@ -1,7 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
 import AddTodo from './component/AddTodo';
 import Todos from './Todos';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
